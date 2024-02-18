@@ -79,16 +79,15 @@ namespace Warhammer40KDatacardGenerator
 			string retval = "";
 			if(RangedWeapons.Count > 0)
 			{
-				retval += "[e85545]Ranged weapons[-]\n";
+				retval += "\n[e85545]Ranged weapons[-]\n";
 				foreach (var item in RangedWeapons)
-					retval += WeaponStatsAsString(item) + "\n";
-				//retval += "\n";
+					retval += WeaponStatsAsString(item);
 			}
 			if(MeleeWeapons.Count >0)
 			{
-				retval += "[e85545]Melee weapons[-]\n";
+				retval += "\n[e85545]Melee weapons[-]\n";
 				foreach (var item in MeleeWeapons)
-					retval += WeaponStatsAsString(item) + "\n";
+					retval += WeaponStatsAsString(item);
 			}
 			return retval;
 		}
@@ -161,7 +160,7 @@ namespace Warhammer40KDatacardGenerator
 
 					retval += _stats.skills[i]; 
 				}
-				retval += "][-]";
+				retval += "][-]\n";
 			}
 			
 			return retval;

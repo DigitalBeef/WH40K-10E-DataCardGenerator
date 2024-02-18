@@ -2,6 +2,7 @@
 using  Warhammer40KDatacardGenerator;
 using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 internal class Program
 {
     [STAThread]
@@ -12,43 +13,7 @@ internal class Program
             Console.WriteLine(message);
         }
 
-        //Datacard testCard = new Datacard();
-        //
-        //Model testModel = new Model();
-        //testModel.movement = "6\"";
-        //testModel.toughness = "5";
-        //testModel.armor = "4+";
-        //testModel.wounds = "3";
-        //testModel.leadership = "6+";
-        //testModel.invuln = "0";
-        //testCard.SetModelStats(testModel);
-        //
-        //Weapon testWeapon = new Weapon();
-        //testWeapon.name = "Astartes Chainsword";
-        //testWeapon.isMelee = true;
-        //testWeapon.attacks = "4";
-        //testWeapon.skill = "3+";
-        //testWeapon.strength = "4";
-        //testWeapon.ap = "-1";
-        //testWeapon.damage = "1";
-        //
-        //testCard.AddWeapon(testWeapon);
-        //
-        //testWeapon.name = "Bolt Pistol";
-        //testWeapon.isMelee = false;
-        //testWeapon.range = "12\"";
-        //testWeapon.attacks = "1";
-        //testWeapon.skill = "3+";
-        //testWeapon.strength = "4";
-        //testWeapon.ap = "0";
-        //testWeapon.damage = "1";
-        //testCard.AddWeapon(testWeapon);
-        //
-        //testCard.AddAbility("Oath of Moment");
-        //testCard.AddAbility("Berserk Charge");
-        //
-        //Print(testCard.GetStringForm());
-        //Clipboard.SetText(testCard.GetStringForm());
+        //MakeTestCard();
 
         string command = "";
         do
@@ -67,6 +32,52 @@ internal class Program
                 Print("\n\n");
             }
         } while (command?.ToLower() != "quit");
+
+
+        void MakeTestCard()
+        {
+            Datacard testCard = new Datacard();
+
+            Model testModel = new Model();
+            testModel.movement = "6\"";
+            testModel.toughness = "5";
+            testModel.armor = "4+";
+            testModel.wounds = "3";
+            testModel.leadership = "6+";
+            testModel.invuln = "0";
+            testCard.SetModelStats(testModel);
+
+            Weapon testWeapon = new Weapon();
+            testWeapon.name = "Astartes Chainsword";
+            testWeapon.isMelee = true;
+            testWeapon.attacks = "4";
+            testWeapon.skill = "3+";
+            testWeapon.strength = "4";
+            testWeapon.ap = "-1";
+            testWeapon.damage = "1";
+
+            testCard.AddWeapon(testWeapon);
+            testCard.AddWeapon(testWeapon);
+
+            testWeapon.name = "Bolt Pistol";
+            testWeapon.isMelee = false;
+            testWeapon.range = "12\"";
+            testWeapon.attacks = "1";
+            testWeapon.skill = "3+";
+            testWeapon.strength = "4";
+            testWeapon.ap = "0";
+            testWeapon.damage = "1";
+            testWeapon.skills = new List<string>();
+            testWeapon.skills.Add("Pistol");
+            testCard.AddWeapon(testWeapon);
+            testCard.AddWeapon(testWeapon);
+
+            testCard.AddAbility("Oath of Moment");
+            testCard.AddAbility("Berserk Charge");
+
+            Print(testCard.GetStringForm());
+            Clipboard.SetText(testCard.GetStringForm());
+        }
     }
 }
 
