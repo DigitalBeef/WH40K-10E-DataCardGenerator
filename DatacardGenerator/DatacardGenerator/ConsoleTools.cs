@@ -12,6 +12,8 @@ namespace Warhammer40KDatacardGenerator
         public static string GetInput(string _message)
         {
             Console.WriteLine(_message);
+            if (Console.ReadKey().Key == ConsoleKey.Escape)
+                Application.Exit();
             return Console.ReadLine();
         }
 

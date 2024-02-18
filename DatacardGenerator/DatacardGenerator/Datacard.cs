@@ -214,7 +214,7 @@ namespace Warhammer40KDatacardGenerator
             while (ConsoleTools.AskYesNo("Add a melee weapon? (Y/N)"))
             {
                 Console.WriteLine("-- Making a new melee wepaon --");
-                RangedWeapons.Add(GenerateMeleeWeapon());
+                MeleeWeapons.Add(GenerateMeleeWeapon());
                 Console.WriteLine("\n-- Weapon Finished! --");
             }
         }
@@ -239,7 +239,9 @@ namespace Warhammer40KDatacardGenerator
             _toFill.attacks = ConsoleTools.GetInput("Attacks?");
             _toFill.skill = ConsoleTools.GetInput(_skillLabel) + "+";
             _toFill.strength = ConsoleTools.GetInput("Strength?");
-            _toFill.ap = "-" + ConsoleTools.GetInput("AP?");
+            _toFill.ap = ConsoleTools.GetInput("AP?");
+			if (_toFill.ap != "0")
+				_toFill.ap = "-" + _toFill.ap;
             _toFill.damage = ConsoleTools.GetInput("Damage?");
 
             Console.WriteLine("Skills? (enter a blank line to end)");
