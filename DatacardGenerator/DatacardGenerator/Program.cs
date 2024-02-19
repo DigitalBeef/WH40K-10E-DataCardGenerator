@@ -8,31 +8,33 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        void Print(string message) //alias for brevity 
-        {
-            Console.WriteLine(message);
-        }
-
-        //MakeTestCard();
-
         string command = "";
+        //MakeTestCard();
         do
         {
-            Print("Command? (gen/quit)");
-            command = Console.ReadLine();
+            command = ConsoleTools.GetInput("Command? (gen/quit)");
+
             if (command?.ToLower() == "gen")
-            {
-                Datacard newCard = new Datacard();
-                newCard.Generate();
-                Print("\n ===== Datacard generated and copied to clipboard! ===== ");
+				GenerateNewDatacard();
 
-                string cardString = newCard.GetStringForm();
-                Print(cardString);
-                Clipboard.SetText(cardString);
-                Print("\n\n");
-            }
-        } while (command?.ToLower() != "quit");
+		} while (command?.ToLower() != "quit");
 
+		void GenerateNewDatacard()
+		{
+			Datacard newCard = new Datacard();
+			newCard.Generate();
+
+			Console.WriteLine("\n ===== Datacard generated and copied to clipboard! ===== ");
+			PrintAndCopyCard(newCard);
+		}
+
+        void PrintAndCopyCard(Datacard _toPrint)
+        {
+			string cardString = _toPrint.GetStringForm();
+			Console.WriteLine(cardString);
+			Clipboard.SetText(cardString);
+			Console.WriteLine("\n\n");
+		}
 
         void MakeTestCard()
         {
@@ -75,9 +77,9 @@ internal class Program
             testCard.AddAbility("Oath of Moment");
             testCard.AddAbility("Berserk Charge");
 
-            Print(testCard.GetStringForm());
+            Console.WriteLine(testCard.GetStringForm());
             Clipboard.SetText(testCard.GetStringForm());
         }
-    }
+	}
 }
 

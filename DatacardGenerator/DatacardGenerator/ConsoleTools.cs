@@ -9,11 +9,10 @@ namespace Warhammer40KDatacardGenerator
 {
     static class ConsoleTools
     {
-        public static string GetInput(string _message)
+        public static string GetInput(string _message = "")
         {
-            Console.WriteLine(_message);
-            if (Console.ReadKey().Key == ConsoleKey.Escape)
-                Application.Exit();
+        if(_message != "")
+                Console.WriteLine(_message);
             return Console.ReadLine();
         }
 
@@ -28,6 +27,12 @@ namespace Warhammer40KDatacardGenerator
             }
 
             return input == "y";
+        }
+
+        public static bool GetLineIfNotEmpty(string _message, out string _userInput)
+        {
+            _userInput = GetInput(_message);
+            return _userInput != "";
         }
     }
 }
