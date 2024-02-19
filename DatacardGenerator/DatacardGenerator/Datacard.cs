@@ -119,7 +119,7 @@ namespace Warhammer40KDatacardGenerator
 				_stats.movement = " " + _stats.movement;
 
 			retval +=
-				AppendPaddingToCenterNextString(_stats.movement, _stats.toughness, 5) + 
+				AppendPaddingToCenterNextString(_stats.movement, _stats.toughness, 6) + 
 				AppendPaddingToCenterNextString(_stats.toughness, _stats.armor, 5) +
 				AppendPaddingToCenterNextString(_stats.armor, _stats.wounds, 6) +              //_stats.armor + "    " +
 				AppendPaddingToCenterNextString(_stats.wounds, _stats.leadership, 7) + //_stats.wounds + "     " +
