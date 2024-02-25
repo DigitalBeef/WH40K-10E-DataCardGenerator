@@ -6,47 +6,47 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace Warhammer40KDatacardGenerator
-{ 
-		struct Model
-		{
-			public string 
-				movement,
-				toughness, 
-				armor, 
-				wounds, 
-				leadership, 
-				objectiveControl,
-				invuln;
-		}
-		struct Weapon 
-		{
-			public bool isMelee;
+{
+	struct Model
+	{
+		public string
+			movement,
+			toughness,
+			armor,
+			wounds,
+			leadership,
+			objectiveControl,
+			invuln;
+	}
+	struct Weapon
+	{
+		public bool isMelee;
 
-			public string
-				name,
-				range,
-				attacks,
-				skill,
-				strength,
-				ap,
-				damage;
+		public string
+			name,
+			range,
+			attacks,
+			skill,
+			strength,
+			ap,
+			damage;
 
-			public List<string> skills;
-		}
+		public List<string> skills;
+	}
 
-	 class Datacard
+	class Datacard
 	{
 		public List<Weapon> RangedWeapons { get; private set; }
 		public List<Weapon> MeleeWeapons { get; private set; }
 		public Model Stats { get; private set; }
 		public List<String> Abilities { get; private set; }
 
-		public Datacard() 
+		public Datacard()
 		{
 			RangedWeapons = new List<Weapon>();
 			MeleeWeapons = new List<Weapon>();
 			Abilities = new List<string>();
-		} 
+		}
 
 		public void SetModelStats(Model _stats)
 		{
@@ -58,7 +58,7 @@ namespace Warhammer40KDatacardGenerator
 			if (_wep.isMelee)
 				MeleeWeapons.Add(_wep);
 			else
-			RangedWeapons.Add(_wep);
+				RangedWeapons.Add(_wep);
 		}
 
 		public void AddAbility(string _abl)
@@ -70,10 +70,10 @@ namespace Warhammer40KDatacardGenerator
 		{
 			string retval = ModelStatsAsString(Stats);
 
-			if(RangedWeapons.Count + MeleeWeapons.Count > 0)
+			if (RangedWeapons.Count + MeleeWeapons.Count > 0)
 				retval += "\n" + GetWeaponsString();
 
-			if(Abilities.Count > 0)
+			if (Abilities.Count > 0)
 				retval += "\n" + GetAbilitiesString();
 
 			return retval;
@@ -82,13 +82,13 @@ namespace Warhammer40KDatacardGenerator
 		public string GetWeaponsString()
 		{
 			string retval = "";
-			if(RangedWeapons.Count > 0)
+			if (RangedWeapons.Count > 0)
 			{
 				retval += "\n[e85545]Ranged weapons[-]\n";
 				foreach (var item in RangedWeapons)
 					retval += WeaponStatsAsString(item);
 			}
-			if(MeleeWeapons.Count >0)
+			if (MeleeWeapons.Count > 0)
 			{
 				retval += "\n[e85545]Melee weapons[-]\n";
 				foreach (var item in MeleeWeapons)
@@ -119,12 +119,12 @@ namespace Warhammer40KDatacardGenerator
 				_stats.movement = " " + _stats.movement;
 
 			retval +=
-				AppendPaddingToCenterNextString(_stats.movement, _stats.toughness, 6) + 
+				AppendPaddingToCenterNextString(_stats.movement, _stats.toughness, 6) +
 				AppendPaddingToCenterNextString(_stats.toughness, _stats.armor, 5) +
 				AppendPaddingToCenterNextString(_stats.armor, _stats.wounds, 6) +              //_stats.armor + "    " +
 				AppendPaddingToCenterNextString(_stats.wounds, _stats.leadership, 7) + //_stats.wounds + "     " +
 				AppendPaddingToCenterNextString(_stats.leadership, _stats.objectiveControl, 6) + //_stats.leadership + "     " +
-				AppendPaddingToCenterNextString(_stats.objectiveControl, _stats.invuln,5) + //_stats.objectiveControl + "    " +
+				AppendPaddingToCenterNextString(_stats.objectiveControl, _stats.invuln, 5) + //_stats.objectiveControl + "    " +
 				_stats.invuln;
 
 			return retval;
@@ -132,7 +132,7 @@ namespace Warhammer40KDatacardGenerator
 
 		static string AppendPaddingToCenterNextString(string _input, string _nextString, uint _desiredLength)
 		{
-			_desiredLength -= (uint)(_nextString.Length / 2);
+			_desiredLength -= (uint)((_nextString.Length) / 2);
 			return AppendSpacesToFitLength(_input, _desiredLength);
 		}
 
@@ -166,11 +166,11 @@ namespace Warhammer40KDatacardGenerator
 					if (i > 0)
 						retval += ", ";
 
-					retval += _stats.skills[i]; 
+					retval += _stats.skills[i];
 				}
 				retval += "][-]\n";
 			}
-			
+
 			return retval;
 		}
 
@@ -186,22 +186,24 @@ namespace Warhammer40KDatacardGenerator
 		{
 			Model newStats = new Model();
 
-			newStats.movement				= ConsoleTools.GetInput("Movement?") + "\"";
-			newStats.toughness				= ConsoleTools.GetInput("Toughness?");
-			newStats.armor                    = ConsoleTools.GetInput("Armor save?") + "+";
-			newStats.wounds                 = ConsoleTools.GetInput("Wounds?");
-			newStats.leadership				= ConsoleTools.GetInput("Leadership?") + "+";
-			newStats.objectiveControl		= ConsoleTools.GetInput("Objective control?");
-			newStats.invuln					= ConsoleTools.GetInput("Invuln save? (0 if none)");
+			newStats.movement = ConsoleTools.GetInput("Movement?") ;
+			if(newStats.movement != "-" && newStats.movement.ToLower() != "na")
+				newStats.movement += "\"";
+			newStats.toughness = ConsoleTools.GetInput("Toughness?");
+			newStats.armor = ConsoleTools.GetInput("Armor save?") + "+";
+			newStats.wounds = ConsoleTools.GetInput("Wounds?");
+			newStats.leadership = ConsoleTools.GetInput("Leadership?") + "+";
+			newStats.objectiveControl = ConsoleTools.GetInput("Objective control?");
+			newStats.invuln = ConsoleTools.GetInput("Invuln save? (0 if none)");
 			if (newStats.invuln != "0")
 				newStats.invuln += "+";
 
-		   SetModelStats(newStats);
+			SetModelStats(newStats);
 		}
 
 		private void GenerateRangedWeapons()
 		{
-			while(ConsoleTools.GetLineIfNotEmpty("Ranged weapon name? (enter a blank line to stop adding ranged weapons)", out string userInput))
+			while (ConsoleTools.GetLineIfNotEmpty("Ranged weapon name? (enter a blank line to stop adding ranged weapons)", out string userInput))
 			{
 				//Console.WriteLine("-- Making a new ranged weapon --");
 				RangedWeapons.Add(GenerateNamedRangedWeapon(userInput));
@@ -234,7 +236,7 @@ namespace Warhammer40KDatacardGenerator
 				Console.WriteLine("\n-- Melee Weapon Finished! --");
 			}
 		}
-		
+
 		private Weapon GenerateMeleeWeapon()
 		{
 			Weapon newWep = new Weapon();
@@ -267,7 +269,9 @@ namespace Warhammer40KDatacardGenerator
 				_toFill.range = "Mel";
 
 			_toFill.attacks = ConsoleTools.GetInput("Attacks?");
-			_toFill.skill = ConsoleTools.GetInput(_skillLabel) + "+";
+			_toFill.skill = ConsoleTools.GetInput(_skillLabel);
+			if (_toFill.skill.ToLower() != "na")
+				_toFill.skill += "+";
 			_toFill.strength = ConsoleTools.GetInput("Strength?");
 			_toFill.ap = ConsoleTools.GetInput("AP?");
 			_toFill.damage = ConsoleTools.GetInput("Damage?");
@@ -284,7 +288,7 @@ namespace Warhammer40KDatacardGenerator
 		{
 			Console.WriteLine("Abilities? (Enter a blank line to end)");
 			//while(ConsoleTools.GetLineIfNotEmpty("", out string userInput))
-				//Abilities.Add(userInput);
+			//Abilities.Add(userInput);
 			AddToStringListUntilEmtpyLine(Abilities);
 		}
 
@@ -293,7 +297,7 @@ namespace Warhammer40KDatacardGenerator
 			while (ConsoleTools.GetLineIfNotEmpty("", out string userInput))
 				_list.Add(userInput);
 		}
-		private static string AppendSpacesToFitLength(string _toPad,  uint _desiredLength)
+		private static string AppendSpacesToFitLength(string _toPad, uint _desiredLength)
 		{
 			string padding = "";
 			for (int i = _toPad.Length; i < _desiredLength; i++)
